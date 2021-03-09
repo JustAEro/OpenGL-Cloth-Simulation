@@ -121,7 +121,7 @@ int main()
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
-    generateVertices(vertices, indices, lineIndices, 0.5, 50, 50);
+    generateVertices(vertices, indices, lineIndices, 1, 100, 100);
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -198,8 +198,7 @@ int main()
     return 0;
 }
 
-void 
-Vertices(std::vector <float>& vertices, std::vector <int>& indices, std::vector <int>& lineIndices,
+void generateVertices(std::vector <float>& vertices, std::vector <int>& indices, std::vector <int>& lineIndices,
     float radius, int sectorCount, int stackCount) {
 
     float x, y, z, xy;                              // vertex position
