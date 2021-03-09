@@ -20,7 +20,7 @@ std::vector<int> indices(1);
 std::vector<int> lineIndices(1);
 
 void generateVertices(std::vector <float>& vertices, std::vector <int>& indices, std::vector <int>& lineIndices,
-    int radius, int sectorCount, int stackCount);
+    float radius, int sectorCount, int stackCount);
 
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -121,7 +121,7 @@ int main()
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
-    generateVertices(vertices, indices, lineIndices, 1, 50, 50);
+    generateVertices(vertices, indices, lineIndices, 0.5, 50, 50);
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -142,7 +142,7 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
-        
+
         glEnable(GL_MULTISAMPLE);
 
         processInput(window);
@@ -164,26 +164,26 @@ int main()
         projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
         // Получаем местоположение uniform-матриц...
-         unsigned int modelLoc = glGetUniformLocation(shaderProgram, "model");
-         unsigned int viewLoc = glGetUniformLocation(shaderProgram, "view");
+        unsigned int modelLoc = glGetUniformLocation(shaderProgram, "model");
+        unsigned int viewLoc = glGetUniformLocation(shaderProgram, "view");
         // ...передаем их в шейдеры (разными способами)
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
 
         glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, &projection[0][0]);
-        
+
         float timeValue = glfwGetTime();
         float greenValue = sin(timeValue) / 2.0f + 0.5f;
         float redValue = cos(timeValue) / 2.0f + 0.5f;
         float blueValue = cos(timeValue + 2) / 2.0f + 0.5f;
         int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
         glUniform4f(vertexColorLocation, redValue, greenValue, blueValue, 1.0f);
-        
+
         glBindVertexArray(VAO);
 
         glDrawElements(GL_TRIANGLE_FAN, (unsigned int)lineIndices.size(), GL_UNSIGNED_INT, lineIndices.data());
         glDrawElements(GL_TRIANGLE_FAN, (unsigned int)indices.size(), GL_UNSIGNED_INT, indices.data());
-        
+
         glUniform4f(vertexColorLocation, 0, 0, 0, 1.0f);
         glDrawElements(GL_LINE_LOOP, (unsigned int)lineIndices.size(), GL_UNSIGNED_INT, lineIndices.data());
 
@@ -198,8 +198,9 @@ int main()
     return 0;
 }
 
-void generateVertices(std::vector <float>& vertices, std::vector <int>& indices, std::vector <int>& lineIndices,
-    int radius, int sectorCount, int stackCount) {
+void 
+Vertices(std::vector <float>& vertices, std::vector <int>& indices, std::vector <int>& lineIndices,
+    float radius, int sectorCount, int stackCount) {
 
     float x, y, z, xy;                              // vertex position
 
