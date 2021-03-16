@@ -1,0 +1,4 @@
+﻿  main.c
+D:\opengl16-win-master\opengl12\main.c(337,1): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+D:\opengl16-win-master\opengl12\main.c(445,28): warning C4113: "void (__cdecl *)()" отличается в списках параметров от "void (__cdecl *)(void)"
+  opengl12.vcxproj -> D:\opengl16-win-master\Debug\opengl12.exe

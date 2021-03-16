@@ -1,0 +1,51 @@
+﻿cam.obj : error LNK2019: ссылка на неразрешенный внешний символ glutWarpPointer в функции cam_motion.
+im.obj : error LNK2001: неразрешенный внешний символ __glewGenerateMipmap.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glewInit в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glewGetErrorString в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glutInitWindowPosition в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glutInitWindowSize в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glutInitDisplayMode в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glutMainLoop в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glutPostRedisplay в функции display.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glutSwapBuffers в функции display.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glutSetCursor в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glutKeyboardFunc в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glutReshapeFunc в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glutDisplayFunc в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glutMotionFunc в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glutPassiveMotionFunc в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glutKeyboardUpFunc в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glutGet в функции display.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glutIgnoreKeyRepeat в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ __glutInitWithExit в функции glutInit_ATEXIT_HACK.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ __glutCreateWindowWithExit в функции glutCreateWindow_ATEXIT_HACK.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glutLeaveMainLoop в функции keyboard.
+main.obj : error LNK2001: неразрешенный внешний символ __glewActiveTexture.
+main.obj : error LNK2001: неразрешенный внешний символ __glewBindBuffer.
+main.obj : error LNK2001: неразрешенный внешний символ __glewBufferData.
+main.obj : error LNK2001: неразрешенный внешний символ __glewGenBuffers.
+main.obj : error LNK2001: неразрешенный внешний символ __glewDeleteShader.
+main.obj : error LNK2001: неразрешенный внешний символ __glewEnableVertexAttribArray.
+main.obj : error LNK2001: неразрешенный внешний символ __glewGetAttribLocation.
+main.obj : error LNK2001: неразрешенный внешний символ __glewGetUniformLocation.
+main.obj : error LNK2001: неразрешенный внешний символ __glewUniform1i.
+main.obj : error LNK2001: неразрешенный внешний символ __glewUniform3f.
+main.obj : error LNK2001: неразрешенный внешний символ __glewUniform3fv.
+main.obj : error LNK2001: неразрешенный внешний символ __glewUniformMatrix4fv.
+main.obj : error LNK2001: неразрешенный внешний символ __glewUseProgram.
+main.obj : error LNK2001: неразрешенный внешний символ __glewVertexAttribPointer.
+main.obj : error LNK2001: неразрешенный внешний символ __glewBindVertexArray.
+main.obj : error LNK2001: неразрешенный внешний символ __glewGenVertexArrays.
+util.obj : error LNK2001: неразрешенный внешний символ __glewAttachShader.
+util.obj : error LNK2001: неразрешенный внешний символ __glewCompileShader.
+util.obj : error LNK2001: неразрешенный внешний символ __glewCreateProgram.
+util.obj : error LNK2001: неразрешенный внешний символ __glewCreateShader.
+util.obj : error LNK2001: неразрешенный внешний символ __glewGetProgramInfoLog.
+util.obj : error LNK2001: неразрешенный внешний символ __glewGetProgramiv.
+util.obj : error LNK2001: неразрешенный внешний символ __glewGetShaderInfoLog.
+util.obj : error LNK2001: неразрешенный внешний символ __glewGetShaderiv.
+util.obj : error LNK2001: неразрешенный внешний символ __glewLinkProgram.
+util.obj : error LNK2001: неразрешенный внешний символ __glewShaderSource.
+D:\opengl16-win-master\lib\freeglut_staticd.lib : warning LNK4272: тип компьютера библиотеки "x86" конфликтует с типом целевого компьютера "x64"
+D:\opengl16-win-master\lib\glew32s.lib : warning LNK4272: тип компьютера библиотеки "x86" конфликтует с типом целевого компьютера "x64"
+D:\opengl16-win-master\x64\Debug\opengl12.exe : fatal error LNK1120: неразрешенных внешних элементов: 48
