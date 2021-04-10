@@ -35,7 +35,7 @@ private:
     float vx, vy, vz;
     int lifetime;
 public:
-    Particle (float x = 0, float y = 0, float z = 0, float vx = 0.2, float vy = 0.2, float vz = 0,  int lifetime = 1000) {
+    Particle(float x = 0, float y = 0, float z = 0, float vx = 0.2, float vy = 0.2, float vz = 0, int lifetime = 1000) {
         this->x = x; this->y = y; this->z = z;
         this->vx = vx; this->vy = vy; this->vz = vz;
         this->lifetime = lifetime;
@@ -43,7 +43,7 @@ public:
 
     bool is_alive() { return true ? (lifetime > 0) : false; }
 
-    void set_lifetime(int lifetime){
+    void set_lifetime(int lifetime) {
         this->lifetime = lifetime;
     }
 
@@ -146,12 +146,30 @@ int main()
     glDeleteShader(fragmentShader);
 
     // Указывание вершин (и буферов) и настройка вершинных атрибутов
-    float vertices[] = {
-        0.4f, 0.1f, 0.0f,
-       0.1f, -0.5f, 0.0f,
-        0.01f, -0.01f, 0.0f,
-        0.0f,  0.01f, 0.0f,
-        0.7f, 0.4f, 0.0f
+   float vertices[] = {
+         0.0f,   0.0f,    0.0f,
+         0.0f,  -0.05f,   0.0f,
+         -0.05f, -0.05f,   0.0f,
+        -0.05f, -0.05f,   0.0f,
+        -0.05f,  0.0f,    0.0f,
+         0.0f,   0.0f,    0.0f
+    };
+        
+   
+    //float vertices[] = {
+       // 0.4f, 0.1f, 0.0f,
+      // 0.1f, -0.5f, 0.0f,
+      //  0.01f, -0.01f, 0.0f,
+     //   0.0f,  0.01f, 0.0f,
+     //   0.7f, 0.4f, 0.0f
+    //};
+
+    std::vector<glm::vec3> particles_locations = {
+        glm::vec3(0.5f, 0.5f, 0.0f),
+        glm::vec3(0.0f, 0.5f, 0.0f),
+        glm::vec3(-0.5f,-0.5f, 0.0f),
+        glm::vec3(0.7f, 0.4f, 0.0f),
+        glm::vec3(0.4f, 0.1f, 0.0f)
     };
 
     unsigned int VBO, VAO;
@@ -169,56 +187,87 @@ int main()
     glEnableVertexAttribArray(0);
 
     // Обратите внимание, что данное действие разрешено, вызов glVertexAttribPointer() зарегистрировал VBO как привязанный вершинный буферный объект для вершинного атрибута, так что после этого мы можем спокойно выполнить отвязку
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // Вы можете отменить привязку VАО после этого, чтобы другие вызовы VАО случайно не изменили этот VAO (но подобное довольно редко случается).
     // Модификация других VAO требует вызов glBindVertexArray(), поэтому мы обычно не снимаем привязку VAO (или VBO), когда это не требуется напрямую
-    glBindVertexArray(0);
+    glBindVertexArray(VAO);
 
 
     // Раскомментируйте следующую строку для отрисовки полигонов в режиме каркаса
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     srand(time(NULL));
-    int lifetime = 1500000;
-    double speed[] = {
-        -0.009, 0.009, 0
-        -0.005, 0.006, 0,
-        0.005, 0.004 , 0,
-        -0.005, -0.004 , 0,
-        0.005, -0.001, 0
-    };
+    //int lifetime = 1500000;
+
+    std::vector<float> velocityY;
+    std::vector<float> velocityX;
+
+    for (int i = 0; i < particles_locations.size(); i++) {
+        float xr = (rand() % 2 + 1);
+        float yr = (rand() % 2 + 1);
+        velocityY.push_back(yr / 300);
+        velocityX.push_back(xr / 300);
+
+    }
+
+
+   // double speed[] = {
+      //  -0.009, 0.009, 0
+      //  - 0.005, 0.006, 0,
+      //  0.005, 0.004 , 0,
+      //  -0.005, -0.004 , 0,
+     //   0.005, -0.001, 0
+    //};
     //double vx1 = 0.009, vy1 = -0.009;
     //double vx2 = -0.009, vy2 = 0.008;
     // Цикл рендеринга
-    double border = 0.8;
-    
-    int step = 0;
-    int n = 5; //number of particles
+    double border = 0.95;
+
+    //int step = 0;
+    //int n = 5; //number of particles
     while (!glfwWindowShouldClose(window))
     {
         // Обработка ввода
         processInput(window);
-       glEnable(GL_DEPTH_TEST);
+        glEnable(GL_DEPTH_TEST);
         // Рендеринг
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Рисуем наш первый треугольник
         glUseProgram(shaderProgram);
-        glBindVertexArray(VAO); // поскольку у нас есть только один VАО, то нет необходимости связывать его каждый раз (но мы сделаем это, чтобы всё было немного организованнее)
+        //glBindVertexArray(VAO); // поскольку у нас есть только один VАО, то нет необходимости связывать его каждый раз (но мы сделаем это, чтобы всё было немного организованнее)
         glPointSize(15);
 
         //Particle particle;
-        glm::mat4 view = glm::mat4(1.0f);
+        for (int i = 0; i < particles_locations.size(); i++) {
+            glm::mat4 view = glm::mat4(1.0f);
+            view = glm::translate(view, particles_locations[i]);
+            //view = glm::translate(view, glm::vec3(vertices[3], vertices[4], 0.0f));
+            unsigned int viewLoc = glGetUniformLocation(shaderProgram, "view");
+            glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
+            //glBindVertexArray(VAO);
+            //glDrawArrays(GL_POINTS, 0, particles_locations.size());
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        }
+        //glm::mat4 view = glm::mat4(1.0f);
         //glm::mat4 view2 = glm::mat4(1.0f);
 
-        for (int i = 0; i < 3*n; i+=3) {
+        for (int i = 0; i < particles_locations.size(); i++) {
 
-            vertices[i] += speed[i]; //+ particle.get_vx();
-            if (vertices[i] > border  || vertices[i] < (-1) * border) {
+            //vertices[i] += speed[i]; //+ particle.get_vx();
+
+            particles_locations[i].x += velocityX[i];
+            particles_locations[i].y += velocityY[i];
+            particles_locations[i].z += 0;
+
+            if (particles_locations[i].x >= border || particles_locations[i].x <= (-1) * border) {
                 //vertices[i] = border;
-                speed[i+1] *= -1;
-                speed[i] *= -1;
+                //speed[i + 1] *= -1;
+                //speed[i] *= -1;
+                velocityX[i] *= -1;
+
             }
 
             //else if (vertices[i] < (-1) * border) {
@@ -227,59 +276,69 @@ int main()
                 //speed[i+1] *= -1;
             //}
 
-            vertices[i+1] += speed[i+1];// + particle.get_vy();;
-            if (vertices[i+1] > border || vertices[i+1] < (-1)*border) {
-               // vertices[i+1] = border;
-                speed[i+1] *= -1;
-                speed[i] *= -1;
+            //vertices[i + 1] += speed[i + 1];// + particle.get_vy();;
+
+            if (particles_locations[i].y > border || particles_locations[i].y < (-1) * border) {
+                // vertices[i+1] = border;
+                velocityY[i] *= -1;
+                //speed[i + 1] *= -1;
+                //speed[i] *= -1;
             }
             //else if (vertices[i+1] < -1 * border) {
                 //vertices[i+1] = -1 * border;
                //speed[i+1] *= -1;
                 //speed[i] *= -1;
            // }
-            
-            for (int j = i + 3; j < 3 * n; j+=3) {
-                if (  sqrt((vertices[i] - vertices[j])*(vertices[i]-vertices[j]) + (vertices[i+1] - vertices[j+1])*(vertices[i+1]-vertices[j+1])) <= 0.1   ) {
-                    speed[i] *= -1;
-                    speed[i+1] *= -1;
-                    speed[j] *= -1;
-                    speed[j+1] *= -1;
-                    vertices[i] -= 0.001;
-                    vertices[i+1] -= 0.001;
-                    vertices[j] += 0.001;
-                    vertices[j+1] += 0.001;
-              }
+        }
+            for (int i = 0; i < particles_locations.size() ; i++) {
+                for (int j = i + 1; j < particles_locations.size(); j++) {
+
+                    float dx = particles_locations[i].x - particles_locations[j].x;
+                    float dy = particles_locations[i].y - particles_locations[j].y;
+
+                    if (sqrt( dx*dx + dy*dy ) <= 0.1f) {
+
+                        velocityX[i] *= -1;
+                        velocityX[j] *= -1;
+                        velocityY[i] *= -1;
+                        velocityY[j] *= -1;
+                        //vertices[i] -= 0.001;
+                        //vertices[i + 1] -= 0.001;
+                        //vertices[j] += 0.001;
+                        //vertices[j + 1] += 0.001;
+                    }
+                }
+    
             }
 
-            view = glm::translate(view, glm::vec3(vertices[i], vertices[i + 1], 0.0f));
+            //view = glm::translate(view, glm::vec3(vertices[i], vertices[i + 1], 0.0f));
             //view = glm::translate(view, glm::vec3(vertices[3], vertices[4], 0.0f));
-            unsigned int viewLoc = glGetUniformLocation(shaderProgram, "view");
-            glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
+            //unsigned int viewLoc = glGetUniformLocation(shaderProgram, "view");
+            //glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
             //glBindVertexArray(VAO);
-            glDrawArrays(GL_POINTS, 0, 1);
-            lifetime--;
+            //glDrawArrays(GL_POINTS, 0, 1);
+            //lifetime--;
             //vertices[0] = dx;
             //vertices[1] = dy;
-            step++;
-            
-        }
-        
-            
-           //unsigned int viewLoc = glGetUniformLocation(shaderProgram, "view");
+            //step++;
 
-            //view2 = glm::translate(view2, glm::vec3(vertices[3], vertices[4], 0.0f));
-            //unsigned int viewLoc2 = glGetUniformLocation(shaderProgram, "view2");
-           // glUniformMatrix4fv(viewLoc2, 1, GL_FALSE, &view2[0][0]);
-            //particle.move();
-            //int lt = particle.get_lifetime();
-           // lt -= 1.0f;
-            //particle.set_lifetime(lt);
-           
+        //}
 
-         //glBindVertexArray(0); // не нужно каждый раз его отвязывать
 
-        // glfw: обмен содержимым front- и back- буферов. Отслеживание событий ввода\вывода (была ли нажата/отпущена кнопка, перемещен курсор мыши и т.п.)
+        //unsigned int viewLoc = glGetUniformLocation(shaderProgram, "view");
+
+         //view2 = glm::translate(view2, glm::vec3(vertices[3], vertices[4], 0.0f));
+         //unsigned int viewLoc2 = glGetUniformLocation(shaderProgram, "view2");
+        // glUniformMatrix4fv(viewLoc2, 1, GL_FALSE, &view2[0][0]);
+         //particle.move();
+         //int lt = particle.get_lifetime();
+        // lt -= 1.0f;
+         //particle.set_lifetime(lt);
+
+
+      //glBindVertexArray(0); // не нужно каждый раз его отвязывать
+
+     // glfw: обмен содержимым front- и back- буферов. Отслеживание событий ввода\вывода (была ли нажата/отпущена кнопка, перемещен курсор мыши и т.п.)
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
